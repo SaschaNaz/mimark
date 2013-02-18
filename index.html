@@ -160,10 +160,9 @@
 				}
 				else {
 					var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB,
-						dbVersion = 1.0;
 
 					// Create/open database
-					var request = indexedDB.open("mifile", dbVersion),
+					var request = indexedDB.open("mifile", 1),
 						db,
 						createObjectStore = function (dataBase) {
 							// Create an objectStore
