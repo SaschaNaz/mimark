@@ -198,7 +198,7 @@
 							var put = transaction.objectStore("miwave").put(blob, "wave");
 
 							// Retrieve the file that was just stored
-							transaction.objectStore("elephants").get("wave").onsuccess = function (event) {
+							transaction.objectStore("miwave").get("wave").onsuccess = function (event) {
 								var wavFile = event.target.result;
 								console.log("Got miwave!" + wavFile);
 
@@ -220,6 +220,10 @@
 						};
 						getImageFile();
 					}
+
+					request.onupgradeneeded = function (event) {
+			        		createObjectStore(event.target.result);
+		    			};
 				}
 
 				setTimeout(function() {
