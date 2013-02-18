@@ -250,7 +250,7 @@
 				var d = (time-t)/1000;
 				t = time;
 				cur = (1/d).toFixed(1);
-				$('ul li').each(function() {
+				/*$('ul li').each(function() {
 					var $this = $(this);
 					var idx = $('ul li').index(this);
 					//$this.css('color','rgb('+(bx+30*idx)+','+(by+30*idx)+','+(bz+30*idx)+')');
@@ -262,7 +262,7 @@
 						transform:rot,
 						color:(isEx)?'rgb('+(bx+15*idx)%255+','+(by+15*idx)%255+','+(bz+15*idx)%255+')':'#ccc'
 					});
-				});
+				});*/
 				bx = (bx+1)%360;
 				by = (by+2)%360;
 				bz = (bz+3)%360;
@@ -291,12 +291,12 @@
 */
 				setTimeout(function() {
 					var transform = 'scale3d('+scale+','+scale+',1) translate3d('+x+'px,'+y+'px,'+z+'px) rotateX('+rotateX+'deg) rotateY('+rotateY+'deg) rotateZ('+rotateZ+'deg)';
-					mi.css({
+					/*mi.css({
 						webkitTransform:transform,
 						MozTransform:transform,
 						oTransform:transform,
 						transform:transform
-					});
+					});*/
 				},100);
 				if (waContext) {
 					var s = waContext.createBufferSource();
