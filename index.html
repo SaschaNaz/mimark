@@ -159,7 +159,7 @@
 					xhr.send();
 				}
 				else {
-					var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB,
+					var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB;
 
 					// Create/open database
 					var request = indexedDB.open("mifile", 1),
