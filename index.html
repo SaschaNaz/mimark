@@ -146,8 +146,8 @@
 				lis = $('ul li');
 
 				var xhr = new XMLHttpRequest();
-				xhr.open('GET','mi.wav',true);
 				if (waContext || adAudio) {
+					xhr.open('GET','mi.wav',true);
 					xhr.responseType = 'arraybuffer';
 					xhr.onload = function() {
 						if (waContext) buf = waContext.createBuffer(this.response,false);
@@ -171,6 +171,7 @@
 						},
 
 						getImageFile = function () {
+							xhr.open('GET','mi.aac',true);
 							xhr.responseType = "blob";
 							xhr.onload = function () {
 								if (this.status === 200) {
