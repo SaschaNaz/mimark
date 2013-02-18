@@ -218,7 +218,24 @@
 						db.onerror = function (event) {
 							console.log("Error creating/accessing IndexedDB database");
 						};
-						getImageFile();
+						
+						// Interim solution to create an objectStore. Will be deprecated
+						if (db.setVersion) {
+							if (db.version != dbVersion) {
+								var setVersion = db.setVersion(dbVersion);
+								setVersion.onsuccess = function () {
+									createObjectStore(db);
+									getImageFile();
+								};
+							}
+							else {
+							getImageFile();
+							}
+						}
+						else {
+							getImageFile();
+						}
+
 					}
 
 					request.onupgradeneeded = function (event) {
