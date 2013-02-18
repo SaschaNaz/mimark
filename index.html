@@ -205,6 +205,10 @@
 							};
 						};
 
+					request.onupgradeneeded = function (event) {
+			        		createObjectStore(event.target.result);
+		    			};
+
 					request.onsuccess = function (event) {
 						console.log("Success creating/accessing IndexedDB database");
 						db = request.result;
@@ -212,12 +216,8 @@
 						db.onerror = function (event) {
 							console.log("Error creating/accessing IndexedDB database");
 						};
-					};
-
-					request.onupgradeneeded = function (event) {
-			        		createObjectStore(event.target.result);
 						getImageFile();
-		    			};
+					};
 
 					request.onerror = function (event) {
 						console.log("Error creating/accessing IndexedDB database");
