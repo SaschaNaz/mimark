@@ -1,336 +1,352 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <title>Mi chin geot gattayo</title>
-    <script src="flotr2.min.js"></script>
-	<style>
-	* {
-		perspective: 1000;
-		perspective-origin: 0 0;
-		-o-perspective: 1000px;
-		-o-perspective-origin: 0 0;
-		-moz-perspective: 1000px;
-		-moz-perspective-origin: 0 0;
-		-webkit-perspective: 1000px;
-		-webkit-perspective-origin: 0 0;
-	}
-	html, body {
-		margin: 0;
-		padding: 0;
-		width: 100%;
-		height: 100%;
-		background: #222;
-		overflow: hidden;
-	}
+	<head>
+		<title>Mi chin geot gattayo</title>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta charset="UTF-8" />
+		<script src="flotr2.min.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<style>
+		* {
+			perspective: 1000px;
+			perspective-origin: 0 0;
+			-o-perspective: 1000px;
+			-o-perspective-origin: 0 0;
+			-moz-perspective: 1000px;
+			-moz-perspective-origin: 0 0;
+			-webkit-perspective: 1000px;
+			-webkit-perspective-origin: 0 0;
+		}
+		html, body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			background: #222;
+			overflow: hidden;
+		}
 		
-	#social {
-		position: absolute;
-		overflow: hidden;
-		top: 100px;
-		right: 0px;
-		z-index: 99999;
-	}
+		#social {
+			position: absolute;
+			overflow: hidden;
+			top: 100px;
+			right: 0px;
+			z-index: 99999;
+		}
 		
-	#ex {
-		position: absolute;
-		top: 80px;
-		left: 20px;
-		z-index: 9999;
-		color: #ccc;
-		font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
-		font-weight: 700;
-		font-size: 20px;
-		line-height: 25px;
-	}
+		#ex {
+			position: absolute;
+			top: 80px;
+			left: 20px;
+			z-index: 9999;
+			color: #ccc;
+			font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+			font-weight: 700;
+			font-size: 20px;
+			line-height: 25px;
+		}
 		
-	#logo {
-		position: absolute;
-		top: 20px;
-		right: 20px;
-		width: 375px;
-		height: 60px;
-		text-indent: -9999em;
-		background: url('mimark_logo.png') no-repeat;
-		background-size: 100% 100%;
-		z-index: 99999;
-	}
+		#logo {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			width: 375px;
+			height: 60px;
+			text-indent: -9999em;
+			background: url('mimark_logo.png') no-repeat;
+			background-size: 100% 100%;
+			z-index: 99999;
+		}
 		
-	p#counter {
-		position: absolute;
-		top: 0px;
-		left: 20px;
-		color: #ccc;
-		font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
-		font-weight: 700;
-		font-size: 20px;
-		line-height: 25px;
-	}
+		p#counter {
+			position: absolute;
+			top: 0px;
+			left: 20px;
+			color: #ccc;
+			font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+			font-weight: 700;
+			font-size: 20px;
+			line-height: 25px;
+		}
 		
-	ul {
-		margin: 0;
-		padding: 0;
-		width: 100%;
-		height: 100%;
-	}
+		ul {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
 		
-	li {
-		font-family: "Apple SD Gothic Neo", "AppleSDGothicNeo", "SDGothicNeo1", "Malgun Gothic", "NanumGothic", "Gulim", sans-serif;
-		color: #ccc;
-	}
-	#fps {
-		width: 300px;
-		height: 200px;
-	}
-	#info {
-		display: inline-block;
-		position: absolute;
-		bottom: 10px;
-		right: 10px;
-	}
-	#splash {
-		margin: 0;
-		padding: 0;
-		width: 100%;
-		height: 100%;
-		background: url('mimark_bg.jpg') no-repeat;
-		background-size: cover;
-		opacity: 0;
-		transition: opacity 2s;
-		-moz-transition: opacity 2s;
-		-webkit-transition: opacity 2s;
-		-o-transition: opacity 2s;
-		z-index: 9998;
-	}
-	div.mi {
-		-webkit-transition: -webkit-transform 1s;
-		-moz-transition: -moz-transform 1s;
-		-o-transition: -o-transform 1s;
-		transition: transform 1s;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		-webkit-transform: scale3d(1,1,1) translate3d(0px,0px,0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-		-moz-transform: scale3d(1,1,1) translate3d(0px,0px,0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-		-o-transform: scale3d(1,1,1) translate3d(0px,0px,0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-		transform: scale3d(1,1,1) translate3d(0px,0px,0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-	}
-	</style>
-	<script>
-		var c, buf, bx = 0, by = 0, bz = 0, t, fps = [], s, p, opt, cur, lis, isEx = false;
-		var waContext;
-		var adAudio;
-		window.AudioContext = window.AudioContext || window.webkitAudioContext;// || window.mozAudioContext; Firefox directly added AudioContext without prefix starting Firefox Nightly 21. Firefox stable version never have supported it with or without the prefix.
-		if (window.AudioContext) waContext = new AudioContext();//Web Audio API checking
-		else { var a = new Audio(); if (a.mozWriteAudio) { a.mozSetup(1, 22050); adAudio = a; } }//Audio Data API checking
-		window.onload = function () {
-		    window.onmousemove = function (e) { e.preventDefault(); };
+		li {
+			font-family: "Apple SD Gothic Neo", "AppleSDGothicNeo", "SDGothicNeo1", "Malgun Gothic", "NanumGothic", "Gulim", sans-serif;
+			color: #ccc;
+		}
+		#fps {
+			width: 300px;
+			height: 200px;
+		}
+		#info {
+			display: inline-block;
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+		}
+		#splash {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			background: url('mimark_bg.jpg') no-repeat;
+			background-size: cover;
+			opacity: 0;
+			transition: opacity 2s;
+			-moz-transition: opacity 2s;
+			-webkit-transition: opacity 2s;
+			-o-transition: opacity 2s;
+			z-index: 9998;
+		}
+		div.mi {
+			-webkit-transition: -webkit-transform 1s;
+			-moz-transition: -moz-transform 1s;
+			-o-transition: -o-transform 1s;
+			transition: transform 1s;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-webkit-transform: scale3d(1,1,1) translate3d(0px,0px,0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+			-moz-transform: scale3d(1,1,1) translate3d(0px,0px,0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+			-o-transform: scale3d(1,1,1) translate3d(0px,0px,0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+			transform: scale3d(1,1,1) translate3d(0px,0px,0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+		}
+		</style>
+		<script>
+			var c, buf, bx = 0, by = 0, bz = 0, t, fps = [], s, p, opt, cur, lis, isEx = false;
+			var waContext;
+			var adAudio;
+			window.AudioContext = window.AudioContext || window.webkitAudioContext;// || window.mozAudioContext; Firefox directly added AudioContext without prefix starting Firefox Nightly 21. Firefox stable version never have supported it with or without the prefix.
+			if (window.AudioContext) waContext = new AudioContext();//Web Audio API checking
+			else { var a = new Audio(); if (a.mozWriteAudio) { a.mozSetup(1, 22050); adAudio = a; } }//Audio Data API checking
+			window.onload = function() {
+				window.onmousemove = function(e) { e.preventDefault(); };
+				
+				window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
+				var ip = document.getElementsByTagName('input')[0];
+				isEx = ip.checked;
+				ip.onchange = function() {
+					isEx = this.checked;
+					var tstyle = isEx?'preserve-3d':'flat';
+					$('li').css({
+						webkitTransformStyle:tstyle,
+						MozTransformStyle:tstyle,
+						oTransformStyle:tstyle,
+						transformStyle:tstyle
+					});
+				};
+				$('#splash').css('opacity',1);
+				lis = $('ul li');
 
-		    window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
-		    lis = document.querySelectorAll('ul li');
-		    var ip = document.getElementsByTagName('input')[0];
-		    isEx = ip.checked;
-		    ip.onchange = function () {
-		        isEx = this.checked;
-		        var tstyle = isEx ? 'preserve-3d' : 'flat';
+				var xhr = new XMLHttpRequest();
+				if (waContext || adAudio) {
+					xhr.open('GET','mi.wav',true);
+					xhr.responseType = 'arraybuffer';
+					xhr.onload = function() {
+						if (waContext) buf = waContext.createBuffer(this.response,false);
+						else if (adAudio) {
+							buf = new Float32Array(new Int16Array(this.response, 44, (this.response.byteLength - 44) / 2));
+							for (var i = 0; i < buf.length; i++) buf[i] /= 32768;
+						}
+					};
+					xhr.send();
+				}
+				else {
+					var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB;
 
-		        for (var i = 0; i < lis.length; i++) {
-		            lis[i].style.transformStyle = tstyle;
-		        }
-		    };
-		    document.getElementById('splash').style.opacity = 1;
+					// Create/open database
+					var request = indexedDB.open("mifile", 1),
+						db,
+						createObjectStore = function (dataBase) {
+							// Create an objectStore
+							console.log("Creating objectStore");
+							dataBase.createObjectStore("miwave");
+						},
 
-		    var xhr = new XMLHttpRequest();
-		    if (waContext || adAudio) {
-		        xhr.open('GET', 'mi.wav', true);
-		        xhr.responseType = 'arraybuffer';
-		        xhr.onload = function () {
-		            if (waContext) buf = waContext.createBuffer(this.response, false);
-		            else if (adAudio) {
-		                buf = new Float32Array(new Int16Array(this.response, 44, (this.response.byteLength - 44) / 2));
-		                for (var i = 0; i < buf.length; i++) buf[i] /= 32768;
-		            }
-		        };
-		        xhr.send();
-		    }
-		    else {
-		        var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB;
+						getImageFile = function () {
+							xhr.open('GET','mi.mp4',true);
+							xhr.responseType = "blob";
+							xhr.onload = function () {
+								if (this.status === 200) {
+									console.log("Wave retrieved");
 
-		        // Create/open database
-		        var request = indexedDB.open("mifile", 1),
-					db,
-					createObjectStore = function (dataBase) {
-						// Create an objectStore
-						console.log("Creating objectStore");
-						dataBase.createObjectStore("miwave");
-					},
+									// Blob as response
+									console.log("Blob:" + this.response);
 
-					getImageFile = function () {
-						xhr.open('GET', 'mi.mp4', true);
-						xhr.responseType = "blob";
-						xhr.onload = function () {
-						    if (this.status === 200) {
-						        console.log("Wave retrieved");
+									// Put the received blob into IndexedDB
+									putElephantInDb(this.response);
+								}
+							};
+							xhr.send();
+						},
 
-						        // Blob as response
-						        console.log("Blob:" + this.response);
+						putElephantInDb = function (blob) {
+							console.log("Putting elephants in IndexedDB");
 
-						        // Put the received blob into IndexedDB
-						        putElephantInDb(this.response);
-						    }
+							// Open a transaction to the database
+							var transaction = db.transaction(["miwave"], 'readwrite');
+
+							// Put the blob into the dabase
+							var put = transaction.objectStore("miwave").put(blob, "wave");
+
+							// Retrieve the file that was just stored
+							transaction.objectStore("miwave").get("wave").onsuccess = function (event) {
+								var wavFile = event.target.result;
+								console.log("Got miwave!" + wavFile);
+
+								// Create and revoke ObjectURL
+								buf = URL.createObjectURL(wavFile);
+							};
 						};
-						xhr.send();
-					},
 
-					putElephantInDb = function (blob) {
-						console.log("Putting elephants in IndexedDB");
+					request.onupgradeneeded = function (event) {
+			        		createObjectStore(event.target.result);
+		    			};
 
-						// Open a transaction to the database
-						var transaction = db.transaction(["miwave"], 'readwrite');
+					request.onsuccess = function (event) {
+						console.log("Success creating/accessing IndexedDB database");
+						db = request.result;
 
-						// Put the blob into the dabase
-						var put = transaction.objectStore("miwave").put(blob, "wave");
-
-						// Retrieve the file that was just stored
-						transaction.objectStore("miwave").get("wave").onsuccess = function (event) {
-						    var wavFile = event.target.result;
-						    console.log("Got miwave!" + wavFile);
-
-						    // Create and revoke ObjectURL
-						    buf = URL.createObjectURL(wavFile);
+						db.onerror = function (event) {
+							console.log("Error creating/accessing IndexedDB database");
 						};
+						getImageFile();
 					};
 
-		        request.onupgradeneeded = function (event) {
-		            createObjectStore(event.target.result);
-		        };
+					request.onerror = function (event) {
+						console.log("Error creating/accessing IndexedDB database");
+					};
+				}
 
-		        request.onsuccess = function (event) {
-		            console.log("Success creating/accessing IndexedDB database");
-		            db = request.result;
-
-		            db.onerror = function (event) {
-		                console.log("Error creating/accessing IndexedDB database");
-		            };
-		            getImageFile();
-		        };
-
-		        request.onerror = function (event) {
-		            console.log("Error creating/accessing IndexedDB database");
-		        };
-		    }
-
-		    setTimeout(function () {
-		        document.getElementById('splash').style.opacity = 0;
-		        setTimeout(function () {
-		            document.getElementById('splash').outerHTML = "";
-		            setInterval(mi, 50);
-		            s = Date.now();
-		            p = document.getElementById('fps');
-		            p.style.width = (window.innerWidth - 20) + 'px';
-		            p.style.height = '200px';
-		            opt = {
-		                yaxis: {
-		                    max: 120,
-		                    min: 0
-		                }
-		            };
-		            window.requestAnimationFrame(mi2);
-		        }, 2000);
-		    }, 2000)
-		};
-
-		function mi2(fingers) {
-		    var time = Date.now();
-		    var d = (time - t) / 1000;
-		    t = time;
-		    cur = (1 / d).toFixed(1);
-		    for (var i = 0; i < lis.length; i++) {
-		        var rot = 'rotateX(' + (bx + 30 * i) + 'deg) rotateY(' + (by + 30 * i) + 'deg) rotateZ(' + (bz + 30 * i) + 'deg)';
-		        var lstyle = lis[i].style;
-		        lstyle.transform = rot;
-		        lstyle.color = (isEx) ? 'rgb(' + (bx + 15 * i) % 255 + ',' + (by + 15 * i) % 255 + ',' + (bz + 15 * i) % 255 + ')' : '#ccc';
-		    }
-		    bx = (bx + 1) % 360;
-		    by = (by + 2) % 360;
-		    bz = (bz + 3) % 360;
-		    setTimeout(window.requestAnimationFrame, 0, mi2);
-		}
-		//window.ontouchmove = function(e) { e.preventDefault(); };
-		//window.ontouchstart = window.ontouchmove = window.onkeydown = window.onmousedown = window.onmousemove = window.ondevicemotion = window.ondeviceorientation = mi;
-		function mi() {
-		    var mi = document.createElement('div'); mi.className = 'mi';
-		    var x = Math.random() * window.innerWidth / 2 - window.innerWidth / 4;
-		    var y = Math.random() * window.innerHeight / 2 - window.innerHeight / 4;
-		    var z = Math.random() * 500 - 250;
-		    var scale = Math.random() * 5 + 1;
-		    var rotateX = Math.random() * 180 + 45;
-		    var rotateY = Math.random() * 180 + 45;
-		    var rotateZ = Math.random() * 180 + 45;
-		    //mi.css('margin-top',-mi.height()/2+'px');
-		    //mi.css('margin-left',-mi.width()/2+'px');
-		    var n = parseInt(Math.random() * lis.length);
-		    lis[n].appendChild(mi);
-		    //mi.appendTo('ul li:nth-child('+n+')');
-		    /*
-                            x += e.direction[0]*100;
-                            y += e.direction[1]*100;
-                            z += e.direction[2]*100;
-            */
-		    setTimeout(function () {
-		        var transform = 'scale3d(' + scale + ',' + scale + ',1) translate3d(' + x + 'px,' + y + 'px,' + z + 'px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) rotateZ(' + rotateZ + 'deg)';
-		        mi.style.transform = transform;
-		    }, 100);
-		    if (waContext) {
-		        var s = waContext.createBufferSource();
-		        s.buffer = buf;
-		        s.connect(waContext.destination);
-		        if (s.start) s.start(0); else s.noteOn(0);
-		    }
-		    else if (adAudio) adAudio.mozWriteAudio(buf);
-		    else (new Audio(buf)).play();
-
-		    var divnum = document.getElementsByTagName('div').length - 5;
-		    document.getElementsByTagName('p')[0].innerHTML = divnum + ' mi<br />' + cur + ' FPS';
-		    if (fps.length > 300)
-		        fps.shift();
-		    fps.push([divnum, cur]);
-		    //opt.
-		    Flotr.draw(p, [fps], opt);
-		    //$('span').html(fps+'fps');
-		    //return e.preventDefault();
-		};
-	</script>
-</head>
-<body>
-	<div id="social">
-		<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Flog2-hwan.github.com%2Fmimark&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;font&amp;colorscheme=dark&amp;action=like&amp;height=21" style="border:none; overflow:hidden; width:100px; height:21px;" ></iframe>
-		<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://log2-hwan.github.com/mimark" data-text="MiMARK '13" data-via="log2_hwan" data-lang="ko">트윗하기</a>
-        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
-	</div>
-	<div id="splash"></div>
-	<div id="logo">MiMark</div>
-	<p id="counter"></p>
-	<div id="ex">Extreme Mode: <input type="checkbox"/></div>
-	<section id="info">
-		<div id='fps'></div>
-	</section>
-	<ul>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-	</ul>
-</body>
+				setTimeout(function() {
+					$('#splash').css('opacity',0);
+					setTimeout(function() {	
+						$('#splash').remove();
+						setInterval(mi,50);
+						s = Date.now();
+						p = document.getElementById('fps');
+						p.style.width = (window.innerWidth-20)+'px';
+						p.style.height = '200px';
+						opt = {
+							yaxis : {
+								max : 120,
+								min : 0
+							}
+						};
+						window.requestAnimationFrame(mi2);
+					},2000);
+				},2000)
+			};
+			
+			function mi2(fingers) {
+				var time = Date.now();
+				var d = (time-t)/1000;
+				t = time;
+				cur = (1/d).toFixed(1);
+				$('ul li').each(function() {
+					var $this = $(this);
+					var idx = $('ul li').index(this);
+					//$this.css('color','rgb('+(bx+30*idx)+','+(by+30*idx)+','+(bz+30*idx)+')');
+					var rot ='rotateX('+(bx+30*idx)+'deg) rotateY('+(by+30*idx)+'deg) rotateZ('+(bz+30*idx)+'deg)';
+					$this.css({
+						webkitTransform:rot,
+						MozTransform:rot,
+						oTransform:rot,
+						transform:rot,
+						color:(isEx)?'rgb('+(bx+15*idx)%255+','+(by+15*idx)%255+','+(bz+15*idx)%255+')':'#ccc'
+					});
+				});
+				bx = (bx+1)%360;
+				by = (by+2)%360;
+				bz = (bz+3)%360;
+				setTimeout(window.requestAnimationFrame, 0, mi2);
+			}
+			//window.ontouchmove = function(e) { e.preventDefault(); };
+			//window.ontouchstart = window.ontouchmove = window.onkeydown = window.onmousedown = window.onmousemove = window.ondevicemotion = window.ondeviceorientation = mi;
+			function mi() {
+				var mi = $('<div class="mi">미</div>');
+				var x = Math.random()*window.innerWidth/2-window.innerWidth/4;
+				var y = Math.random()*window.innerHeight/2-window.innerHeight/4;
+				var z = Math.random()*500-250;
+				var scale = Math.random()*5+1;
+				var rotateX = Math.random()*180+45;
+				var rotateY = Math.random()*180+45;
+				var rotateZ = Math.random()*180+45;
+				//mi.css('margin-top',-mi.height()/2+'px');
+				//mi.css('margin-left',-mi.width()/2+'px');
+				var n = parseInt(Math.random()*lis.length);
+				lis[n].appendChild(mi[0]);
+				//mi.appendTo('ul li:nth-child('+n+')');
+/*
+				x += e.direction[0]*100;
+				y += e.direction[1]*100;
+				z += e.direction[2]*100;
+*/
+				setTimeout(function() {
+					var transform = 'scale3d('+scale+','+scale+',1) translate3d('+x+'px,'+y+'px,'+z+'px) rotateX('+rotateX+'deg) rotateY('+rotateY+'deg) rotateZ('+rotateZ+'deg)';
+					mi.css({
+						webkitTransform:transform,
+						MozTransform:transform,
+						oTransform:transform,
+						transform:transform
+					});
+				},100);
+				if (waContext) {
+					var s = waContext.createBufferSource();
+					s.buffer = buf;
+					s.connect(waContext.destination);
+					if (s.start) s.start(0); else s.noteOn(0);
+				}
+				else if (adAudio) adAudio.mozWriteAudio(buf);
+				else (new Audio(buf)).play();
+				
+				var divnum = $('div').length-5;
+				$('p').html(divnum+' mi<br />'+cur+' FPS');
+				if(fps.length>300)
+					fps.shift();
+				fps.push([divnum,cur]);
+				//opt.
+				Flotr.draw(p,[fps],opt);
+				//$('span').html(fps+'fps');
+				//return e.preventDefault();
+			};
+		</script>
+	</head>
+	<body>
+		<div id="social">
+			<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Flog2-hwan.github.com%2Fmimark&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;font&amp;colorscheme=dark&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://log2-hwan.github.com/mimark" data-text="MiMARK '13" data-via="log2_hwan" data-lang="ko">트윗하기</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		</div>
+		<div id="splash"></div>
+		<div id="logo">MiMark</div>
+		<p id="counter"></p>
+		<div id="ex">Extreme Mode: <input type="checkbox"/></div>
+		<section id="info">
+			<div id='fps'></div>
+		</section>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</body>
 </html>
