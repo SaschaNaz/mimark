@@ -118,7 +118,7 @@
 	}
 	</style>
 	<script>
-		var c, buf, bx = 0, by = 0, bz = 0, t, fps = [], s, p, opt, cur, lis, isEx = false;
+		var c, buf, bx = 0, by = 0, bz = 0, t, fps = [], s, p, opt, cur, lis, isEx = false, donext, repeater;
 		var waContext;
 		var adAudio;
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;// || window.mozAudioContext; Firefox directly added AudioContext without prefix starting Firefox Nightly 21. Firefox stable version never have supported it with or without the prefix.
@@ -129,9 +129,9 @@
 
 		    window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 		    lis = document.querySelectorAll('ul li');
-		    var ip = document.getElementsByTagName('input')[0];
-		    isEx = ip.checked;
-		    ip.onchange = function () {
+		    var ips = document.getElementsByTagName('input');
+		    isEx = ips[0].checked;
+		    ips[0].onchange = function () {
 		        isEx = this.checked;
 		        var tstyle = isEx ? 'preserve-3d' : 'flat';
 
@@ -139,6 +139,11 @@
 		            lis[i].style.transformStyle = tstyle;
 		        }
 		    };
+			donext = ips[1].checked ? pause : mi2;
+			ips[1].onchange = function () {
+				if (this.checked) donext = pause;
+				else { donext = mi2; start(); }
+			}
 		    document.getElementById('splash').style.opacity = 1;
 
 		    var xhr = new XMLHttpRequest();
@@ -168,7 +173,7 @@
 		        document.getElementById('splash').style.opacity = 0;
 		        setTimeout(function () {
 		            document.getElementById('splash').outerHTML = "";
-		            setInterval(mi, 50);
+		            repeater = setInterval(mi, 50);
 		            s = Date.now();
 		            p = document.getElementById('fps');
 		            p.style.width = (window.innerWidth - 20) + 'px';
@@ -179,7 +184,7 @@
 		                    min: 0
 		                }
 		            };
-		            window.requestAnimationFrame(mi2);
+		            window.requestAnimationFrame(donext);
 		        }, 2000);
 		    }, 2000)
 		};
@@ -198,7 +203,7 @@
 		    bx = (bx + 1) % 360;
 		    by = (by + 2) % 360;
 		    bz = (bz + 3) % 360;
-		    window.requestAnimationFrame(mi2);
+		    window.requestAnimationFrame(donext);
 		}
 		//window.ontouchmove = function(e) { e.preventDefault(); };
 		//window.ontouchstart = window.ontouchmove = window.onkeydown = window.onmousedown = window.onmousemove = window.ondevicemotion = window.ondeviceorientation = mi;
@@ -243,7 +248,16 @@
 		    Flotr.draw(p, [fps], opt);
 		    //$('span').html(fps+'fps');
 		    //return e.preventDefault();
-		};
+		}
+		
+		function start() {
+			repeater = setInterval(mi, 50);
+		    window.requestAnimationFrame(donext);
+		}
+		
+		function pause() {
+			clearInterval(repeater);
+		}
 	</script>
 </head>
 <body>
@@ -255,7 +269,10 @@
 	<div id="splash"></div>
 	<div id="logo">MiMark</div>
 	<p id="counter"></p>
-	<div id="ex">Extreme Mode: <input type="checkbox"/></div>
+	<div id="ex">
+		<p>Extreme Mode: <input type="checkbox"/></p>
+		<p>Pause: <input type="checkbox"/></p>
+	</div>
 	<section id="info">
 		<div id='fps'></div>
 	</section>
