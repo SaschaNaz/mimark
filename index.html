@@ -158,8 +158,7 @@
 				xhr.responseType = "blob";
 				xhr.onload = function () {
 					if (this.status === 200) {
-						var wblob = this.response.slice('audio/mp4');
-						buf = URL.createObjectURL(wblob);
+						buf = URL.createObjectURL(this.response.slice(0, this.response.size, 'audio/mp4'));
 					}
 				};
 		    }
