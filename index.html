@@ -158,7 +158,7 @@
 				xhr.responseType = "blob";
 				xhr.onload = function () {
 					if (this.status === 200) {
-						buf = URL.createObjectURL(this.response.slice(0, this.response.size, 'audio/mp4'));
+						buf = URL.createObjectURL(this.response.slice(0, this.response.size, 'audio/mp4'));//slice is only for GitHub Pages which gives an improper mime type.
 					}
 				};
 		    }
