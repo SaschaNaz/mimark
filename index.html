@@ -113,7 +113,7 @@
 	}
 	</style>
 	<script>
-		var c, buf, bx = 0, by = 0, bz = 0, t, fps = [], s, p, opt, cur, lis, isEx = false, donext, repeater;
+		var c, buf, bx = 0, by = 0, bz = 0, t, fps = [], s, p, opt, cur, lis, isEx = false, donext, repeater, doplay;
 		var waContext;
 		var adAudio;
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -171,9 +171,10 @@
 						var tstyle = isEx ? 'preserve-3d' : 'flat';
 
 						for (var i = 0; i < lis.length; i++) {
-							lis[i].style.webkitTransformStyle = tstyle;
-							lis[i].style.mozTransformStyle = tstyle;
-							lis[i].style.transformStyle = tstyle;
+							var lstyle = lis[i].style;
+							lstyle.webkitTransformStyle = tstyle;
+							lstyle.mozTransformStyle = tstyle;
+							lstyle.transformStyle = tstyle;
 						}
 					};
 					donext = ips[1].checked ? pause : mi2;
@@ -182,6 +183,8 @@
 						else { donext = mi2; repeater = setInterval(mi, 50); window.requestAnimationFrame(donext); }
 					}
 					window.requestAnimationFrame(donext);
+					doplay = ips[2].checked ? function() { } : playmi;
+					ips[2].onchange = function () { doplay = ips[2].checked ? function() { } : playmi; } 
 				}, 2000);
 			}, 2000)
 		};
@@ -193,10 +196,11 @@
 			cur = (1 / d).toFixed(1);
 			for (var i = 0; i < lis.length; i++) {
 				var rot = 'rotateX(' + (bx + 30 * i) + 'deg) rotateY(' + (by + 30 * i) + 'deg) rotateZ(' + (bz + 30 * i) + 'deg)';
-				lis[i].style.webkitTransform = rot;
-				lis[i].style.mozTransform = rot;
-				lis[i].style.transform = rot;
-				lis[i].style.color = (isEx) ? 'rgb(' + (bx + 15 * i) % 255 + ',' + (by + 15 * i) % 255 + ',' + (bz + 15 * i) % 255 + ')' : '#ccc';
+				var lstyle = lis[i].style;
+				lstyle.webkitTransform = rot;
+				lstyle.mozTransform = rot;
+				lstyle.transform = rot;
+				lstyle.color = (isEx) ? 'rgb(' + (bx + 15 * i) % 255 + ',' + (by + 15 * i) % 255 + ',' + (bz + 15 * i) % 255 + ')' : '#ccc';
 			}
 			bx = (bx + 1) % 360;
 			by = (by + 2) % 360;
@@ -229,14 +233,7 @@
 				mi.style.mozTransform = transform;
 				mi.style.transform = transform;
 			}, 100);
-			if (waContext) {
-				var s = waContext.createBufferSource();
-				s.buffer = buf;
-				s.connect(waContext.destination);
-				if (s.start) s.start(0); else s.noteOn(0);
-			}
-			else if (adAudio) adAudio.mozWriteAudio(buf);
-			else (new Audio(buf)).play();
+			doplay();
 
 			var divnum = document.getElementsByTagName('div').length - 5;
 			document.getElementsByTagName('p')[0].innerHTML = divnum + ' mi<br />' + cur + ' FPS';
@@ -252,6 +249,17 @@
 		function pause() {
 			clearInterval(repeater);
 		}
+		
+		function playmi() {
+			if (waContext) {
+				var s = waContext.createBufferSource();
+				s.buffer = buf;
+				s.connect(waContext.destination);
+				if (s.start) s.start(0); else s.noteOn(0);
+			}
+			else if (adAudio) adAudio.mozWriteAudio(buf);
+			else (new Audio(buf)).play();
+		}
 	</script>
 </head>
 <body>
@@ -266,6 +274,7 @@
 	<div id="ex">
 		<p>Extreme Mode: <input type="checkbox"/></p>
 		<p>Pause: <input type="checkbox"/></p>
+		<p>Sound: <input type="checkbox"/></p>
 	</div>
 	<section id="info">
 		<div id='fps'></div>
