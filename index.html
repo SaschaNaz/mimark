@@ -78,14 +78,15 @@
 		color: #ccc;
 	}
 	#fps {
-		width: 300px;
+		width: auto;
 		height: 200px;
+		margin: 10px;
 	}
 	#info {
 		display: inline-block;
 		position: absolute;
-		bottom: 10px;
-		right: 10px;
+		width: 100%;
+		bottom: 0;
 	}
 	#splash {
 		margin: 0;
@@ -124,6 +125,7 @@
 
 			window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 			lis = document.querySelectorAll('ul li');
+			p = document.getElementById('fps');
 			var ips = document.getElementsByTagName('input');
 			document.getElementById('splash').style.opacity = 1;
 
@@ -156,9 +158,6 @@
 					document.getElementById('splash').outerHTML = "";
 					repeater = setInterval(mi, 50);
 					s = Date.now();
-					p = document.getElementById('fps');
-					p.style.width = (window.innerWidth - 20) + 'px';
-					p.style.height = '200px';
 					opt = {
 						yaxis: {
 							max: 120,
