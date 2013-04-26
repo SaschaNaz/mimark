@@ -127,7 +127,9 @@
 			window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 			if (!window.requestAnimationFrame)
 			{
-				var message = document.createElement('div'); message.className = 'mi'; message.innerHTML = "Your browser does\'t support animation, so you won\'t be able to run MiMARK.\r\nWe are sorry for that, but please consider upgrading your browser.\r\n\r\nKnown supported browsers: Internet Explorer 10.0 or newer, Firefox 4.0 or newer, Chrome 10.0 or newer, Safari 6.0 or newer.\r\nCurrently Opera and Android stock browser do not support animation.";
+				var message = document.createElement('div');
+				message.className = 'mi';
+				message.innerHTML = "<p>Your browser does\'t support animation, so you won\'t be able to run MiMARK.<br />We are sorry for that, but please consider upgrading your browser.</p><p>Known supported browsers: Internet Explorer 10.0 or newer, Firefox 4.0 or newer, Chrome 10.0 or newer, Safari 6.0 or newer.<br />Currently Opera and Android stock browser do not support animation.</p>";
 				lis[0].appendChild(message);
 				return;
 			}
