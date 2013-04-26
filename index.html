@@ -127,7 +127,8 @@
 			window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 			if (!window.requestAnimationFrame)
 			{
-				lis[0].innerHTML = "Your browser does\'t support animation, so you won\'t be able to run MiMARK.\r\nWe are sorry for that, but please consider upgrading your browser.\r\n\r\nKnown supported browsers: Internet Explorer 10.0 or newer, Firefox 4.0 or newer, Chrome 10.0 or newer, Safari 6.0 or newer.\r\nCurrently Opera and Android stock browser do not support animation.";
+				var message = document.createDocument('div'); message.className = 'mi'; message.innerHTML = "Your browser does\'t support animation, so you won\'t be able to run MiMARK.\r\nWe are sorry for that, but please consider upgrading your browser.\r\n\r\nKnown supported browsers: Internet Explorer 10.0 or newer, Firefox 4.0 or newer, Chrome 10.0 or newer, Safari 6.0 or newer.\r\nCurrently Opera and Android stock browser do not support animation.";
+				lis[0].appendChild(message);
 				return;
 			}
 			
@@ -178,9 +179,10 @@
 
 						for (var i = 0; i < lis.length; i++) {
 							var lstyle = lis[i].style;
-							lstyle.webkitTransformStyle = tstyle;
-							lstyle.mozTransformStyle = tstyle;
-							lstyle.transformStyle = tstyle;
+							lstyle.transformStyle
+								= lstyle.mozTransformStyle
+								= lstyle.webkitTransformStyle
+								= tstyle;
 						}
 					};
 					donext = ips[1].checked ? pause : mi2;
@@ -203,9 +205,10 @@
 			for (var i = 0; i < lis.length; i++) {
 				var rot = 'rotateX(' + (bx + 30 * i) + 'deg) rotateY(' + (by + 30 * i) + 'deg) rotateZ(' + (bz + 30 * i) + 'deg)';
 				var lstyle = lis[i].style;
-				lstyle.webkitTransform = rot;
-				lstyle.mozTransform = rot;
-				lstyle.transform = rot;
+				lstyle.transform
+					= lstyle.mozTransform
+					= lstyle.webkitTransform
+					= rot;
 				lstyle.color = (isEx) ? 'rgb(' + (bx + 15 * i) % 255 + ',' + (by + 15 * i) % 255 + ',' + (bz + 15 * i) % 255 + ')' : '#ccc';
 			}
 			bx = (bx + 1) % 360;
@@ -235,9 +238,10 @@
 			*/
 			setTimeout(function () {
 				var transform = 'scale3d(' + scale + ',' + scale + ',1) translate3d(' + x + 'px,' + y + 'px,' + z + 'px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) rotateZ(' + rotateZ + 'deg)';
-				mi.style.webkitTransform = transform;
-				mi.style.mozTransform = transform;
-				mi.style.transform = transform;
+				mi.style.transform
+					= mi.style.webkitTransform
+					= mi.style.mozTransform
+					= transform;
 			}, 100);
 			doplay();
 
