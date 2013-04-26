@@ -127,7 +127,7 @@
 			window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 			if (!window.requestAnimationFrame)
 			{
-				var message = document.createDocument('div'); message.className = 'mi'; message.innerHTML = "Your browser does\'t support animation, so you won\'t be able to run MiMARK.\r\nWe are sorry for that, but please consider upgrading your browser.\r\n\r\nKnown supported browsers: Internet Explorer 10.0 or newer, Firefox 4.0 or newer, Chrome 10.0 or newer, Safari 6.0 or newer.\r\nCurrently Opera and Android stock browser do not support animation.";
+				var message = document.createElement('div'); message.className = 'mi'; message.innerHTML = "Your browser does\'t support animation, so you won\'t be able to run MiMARK.\r\nWe are sorry for that, but please consider upgrading your browser.\r\n\r\nKnown supported browsers: Internet Explorer 10.0 or newer, Firefox 4.0 or newer, Chrome 10.0 or newer, Safari 6.0 or newer.\r\nCurrently Opera and Android stock browser do not support animation.";
 				lis[0].appendChild(message);
 				return;
 			}
@@ -153,9 +153,8 @@
 				xhr.open('GET', 'mi.mp4', true);
 				xhr.responseType = "blob";
 				xhr.onload = function () {
-					if (this.status === 200) {
+					if (this.status === 200)
 						buf = URL.createObjectURL(this.response.slice(0, this.response.size, 'audio/mp4'));//slice is only for GitHub Pages which gives an improper mime type.
-					}
 				};
 			}
 			xhr.send();
