@@ -6,11 +6,11 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 	<script src="flotr2.min.js"></script>
 	<style>
-	@-ms-viewport { width: device-width; zoom: 1.0; max-zoom: 1.0; user-zoom: fixed; }
-	@-webkit-viewport { width: device-width; zoom: 1.0; max-zoom: 1.0; user-zoom: fixed; }
-	@-moz-viewport { width: device-width; zoom: 1.0; max-zoom: 1.0; user-zoom: fixed; }
-	@-o-viewport { width: device-width; zoom: 1.0; max-zoom: 1.0; user-zoom: fixed; }
-	@viewport { width: device-width; zoom: 1.0; max-zoom: 1.0; user-zoom: fixed; }
+	@-ms-viewport { width: device-width; zoom: 1.0; user-zoom: fixed; }
+	@-webkit-viewport { width: device-width; zoom: 1.0; user-zoom: fixed; }
+	@-moz-viewport { width: device-width; zoom: 1.0; user-zoom: fixed; }
+	@-o-viewport { width: device-width; zoom: 1.0; user-zoom: fixed; }
+	@viewport { width: device-width; zoom: 1.0; user-zoom: fixed; }
 	* {
 		perspective: 1000px;
 		perspective-origin: 0 0;
@@ -130,15 +130,24 @@
 			window.onmousemove = function (e) { e.preventDefault(); };
 			lis = document.querySelectorAll('ul li');
 			window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
-			if (!window.requestAnimationFrame)
 			{
-				var message = document.createElement('div');
-				message.className = 'mi';
-				message.innerHTML = "<p>Your browser does\'t support animation, so you won\'t be able to run MiMARK.<br />We are sorry for that, but please consider upgrading your browser.</p><p>Known supported browsers: Internet Explorer 10.0 or newer, Firefox 4.0 or newer, Chrome 10.0 or newer, Safari 6.0 or newer.<br />Currently Opera and Android stock browser do not support animation.</p>";
-				lis[0].appendChild(message);
-				return;
+				var styles = document.body.style;
+				var notsupported = '';
+				if (!window.requestAnimationFrame)
+					notsupported = 'animation';
+				else if (!styles.transition && !styles.mozTransition && !styles.webkitTransition)
+					notsupported = 'transition';
+				else if (!styles.transform && !styles.mozTransform && !lstyles.webkitTransform)
+					notsupported = 'transform';
+				if (notsupported.length > 0)
+				{
+					var message = document.createElement('div');
+					message.className = 'mi';
+					message.innerHTML = "<p>Your browser does\'t support ' + notsupported + ', so you won\'t be able to run MiMARK.<br />We are sorry for that, but please consider upgrading your browser.</p><p>Known supported browsers: Internet Explorer 10.0 or newer, Firefox 4.0 or newer, Chrome 10.0 or newer, Safari 6.0 or newer.<br />Currently Opera and Android stock browser are not supported.</p>";
+					lis[0].appendChild(message);
+					return;
+				}
 			}
-			
 			p = document.getElementById('fps');
 			var ips = document.getElementsByTagName('input');
 			document.getElementById('splash').style.opacity = 1;
