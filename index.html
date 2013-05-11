@@ -124,7 +124,7 @@
 		var c, buf, bx = 0, by = 0, bz = 0, t, fps = [], s, p, opt, cur, lis, isEx = false, donext, repeater, doplay;
 		var waContext;
 		var adAudio;
-		var stdspan = document.getElementById('stdnpan');
+		var stdspan = document.getElementById('stdspan');
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		if (window.AudioContext) waContext = new AudioContext();//Web Audio API checking
 		else { var a = new Audio(); if (a.mozWriteAudio) { a.mozSetup(1, 22050); adAudio = a; } }//Audio Data API checking
