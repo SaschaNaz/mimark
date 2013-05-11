@@ -137,9 +137,9 @@
 				var notsupported = '';
 				if (!window.requestAnimationFrame)
 					notsupported = 'animation';
-				else if (styles.transition === 'undefined' ¦¦ styles.mozTransition === 'undefined' ¦¦ styles.webkitTransition === 'undefined')
+				else if (styles.transition === 'undefined' || styles.mozTransition === 'undefined' || styles.webkitTransition === 'undefined')
 					notsupported = 'transition';
-				else if (styles.transform === 'undefined' && styles.mozTransform === 'undefined' ¦¦ lstyles.webkitTransform === 'undefined')
+				else if (styles.transform === 'undefined' || styles.mozTransform === 'undefined' || lstyles.webkitTransform === 'undefined')
 					notsupported = 'transform';
 				if (notsupported.length > 0)
 				{
