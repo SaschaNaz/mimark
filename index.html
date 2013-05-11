@@ -120,9 +120,11 @@
 	}
 	</style>
 	<script>
+	(function () {
 		var c, buf, bx = 0, by = 0, bz = 0, t, fps = [], s, p, opt, cur, lis, isEx = false, donext, repeater, doplay;
 		var waContext;
 		var adAudio;
+		var stdspan = document.getElementById('stdnpan');
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		if (window.AudioContext) waContext = new AudioContext();//Web Audio API checking
 		else { var a = new Audio(); if (a.mozWriteAudio) { a.mozSetup(1, 22050); adAudio = a; } }//Audio Data API checking
@@ -157,11 +159,15 @@
 				xhr.open('GET', 'mi.wav', true);
 				xhr.responseType = 'arraybuffer';
 				xhr.onload = function () {
-					if (waContext) waContext.decodeAudioData(this.response,
-						function (decodedData) { buf = decodedData; });
+					if (waContext) {
+						waContext.decodeAudioData(this.response,
+							function (decodedData) { buf = decodedData; });
+						stdspan.innerHTML = 'W3C Working Draft Web Audio API'
+					}
 					else if (adAudio) {
 						buf = new Float32Array(new Int16Array(this.response, 44, (this.response.byteLength - 44) / 2));
 						for (var i = 0; i < buf.length; i++) buf[i] /= 32768;
+						stdspan.innerHTML = 'Mozilla Audio Data API'
 					}
 				};
 			}
@@ -172,6 +178,7 @@
 					if (this.status === 200)
 						buf = URL.createObjectURL(this.response.slice(0, this.response.size, 'audio/mp4'));//slice is only for GitHub Pages which gives an improper mime type.
 				};
+				stdspan.innerHTML = 'W3C HTML5 Audio element'
 			}
 			xhr.send();
 
@@ -285,6 +292,7 @@
 			else if (adAudio) adAudio.mozWriteAudio(buf);
 			else (new Audio(buf)).play();
 		}
+	}());
 	</script>
 </head>
 <body>
@@ -297,6 +305,7 @@
 	<div id="logo">MiMark</div>
 	<p id="counter"></p>
 	<div id="ex">
+		<p>Standard used: <span id="stdspan"></span></p>
 		<p>Extreme Mode: <input type="checkbox"/></p>
 		<p>Pause: <input type="checkbox"/></p>
 		<p>Sound: <input type="checkbox"/></p>
